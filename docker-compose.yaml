@@ -1,0 +1,53 @@
+version: "3.6"
+services:
+  # Front
+  front:
+    container_name: front_fullstack
+    build: front/
+    volumes:
+      - ./front/src:/usr/src/front/src
+      - ./front/public:/usr/src/front/public
+    working_dir: /usr/src/front
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    networks:
+      - fullstack_link
+
+  # API
+  api:
+    container_name: api_fullstack
+    build:
+      context: api/
+    volumes:
+      - ./api/src:/usr/src/api/src
+    working_dir: /usr/src/api
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env.local
+    networks:
+      - fullstack_link
+
+  # MySQL
+  mysql:
+    container_name: mysql_fullstack
+    image: mysql:5.7
+    platform: linux/amd64
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/etc/mysql/conf.d/:ro
+      - mysql_data_fullstack:/var/lib/mysql
+    env_file:
+      - .env.local
+    networks:
+      - fullstack_link
+
+volumes:
+  mysql_data_fullstack:
+
+networks:
+  fullstack_link:
+    external: true
