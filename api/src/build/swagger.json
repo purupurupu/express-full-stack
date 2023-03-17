@@ -1,0 +1,243 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ItemVO": {
+				"properties": {
+					"isDone": {
+						"type": "boolean"
+					},
+					"content": {
+						"type": "string"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"isDone",
+					"content",
+					"order",
+					"id"
+				],
+				"type": "object"
+			},
+			"ItemCreateParams": {
+				"properties": {
+					"isDone": {
+						"type": "boolean"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"isDone",
+					"content"
+				],
+				"type": "object"
+			},
+			"ItemUpdateParams": {
+				"properties": {
+					"isDone": {
+						"type": "boolean"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"type": "object"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": ""
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/items": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Return Items",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ItemVO"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Post",
+				"responses": {
+					"200": {
+						"description": "Return Item",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ItemVO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ItemCreateParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/items/count": {
+			"get": {
+				"operationId": "Count",
+				"responses": {
+					"200": {
+						"description": "Return Item Count",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "number",
+									"format": "double"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/items/{id}": {
+			"get": {
+				"operationId": "Find",
+				"responses": {
+					"200": {
+						"description": "Return Item",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ItemVO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Put",
+				"responses": {
+					"200": {
+						"description": "Return Item",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ItemVO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ItemUpdateParams"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "Succeeded"
+					}
+				},
+				"tags": [
+					"Item"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/v1"
+		}
+	]
+}
