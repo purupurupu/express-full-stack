@@ -4,7 +4,8 @@ WORKDIR /usr/src/api
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-  mysql-client 
+  mysql-client \
+  apt-get install vim
 
 COPY package.json ./
 COPY package-lock.json ./
