@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./pages/Index";
+import Todo from "./pages/Todo";
 import { TodoStore } from "./stores/todo-store";
 import { SnackbarProvider } from "notistack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -18,7 +18,7 @@ function App() {
         <CssBaseline />
         <SnackbarProvider maxSnack={3} hideIconVariant>
           <TodoStore.Provider>
-            <Index />
+            <Todo />
           </TodoStore.Provider>
         </SnackbarProvider>
       </ThemeProvider>
