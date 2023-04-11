@@ -29,7 +29,7 @@ export class UserService {
 
     if (!newUser) {
       throw new ClientError(
-        500,
+        404,
         "User creation failed. Please try again later."
       );
     }
