@@ -1,28 +1,6 @@
 import React, { memo, useState } from "react";
-import makeStyles from "@mui/styles/makeStyles";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import SaveIcon from "@mui/icons-material/Save";
-
 import { ItemVO } from "../types/vo";
-import { Theme } from "@mui/material/styles";
 import { FC } from "react";
-import TextField from "@mui/material/TextField";
-import { Card } from "@mui/material";
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {},
-  card: { mb: 2 },
-  completed: {
-    color: "#808080",
-  },
-}));
 
 type Props = {
   items: ItemVO[];
@@ -39,8 +17,6 @@ const ItemList: FC<Props> = ({
   onUpdateItem,
   onContentStateTrack,
 }) => {
-  const styles = useStyles();
-
   const [editItemId, setEditItemId] = useState<string | null>(null);
   const [beforeEdit, setBeforeEdit] = useState<string | null>(null);
 
@@ -74,40 +50,47 @@ const ItemList: FC<Props> = ({
   };
 
   return (
-    <List className={styles.root}>
+    <ul className="divide-y divide-gray-200">
       {items.map((ItemVO) => {
         console.log("aaaa");
 
         const isEditing = ItemVO.id === editItemId;
         return (
-          <Card key={ItemVO.id} sx={{ mb: 1 }}>
-            <ListItem dense>
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={ItemVO.isDone}
-                  onClick={() => onClickCheckbox(ItemVO)}
-                />
-              </ListItemIcon>
-              {isEditing ? (
-                <TextField
-                  fullWidth
-                  id={ItemVO.id}
-                  value={ItemVO.content}
-                  onChange={(e) => {
-                    editContent(ItemVO.id, e.target.value);
-                  }}
-                  className={ItemVO.isDone ? styles.completed : undefined}
-                  autoFocus
-                />
-              ) : (
-                <ListItemText
-                  primary={ItemVO.content}
-                  className={ItemVO.isDone ? styles.completed : undefined}
-                />
-              )}
-              <IconButton
-                edge="end"
+          <li key={ItemVO.id} className="flex py-4">
+            <div className="flex-shrink-0">
+              <input
+                type="checkbox"
+                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                checked={ItemVO.isDone}
+                onChange={() => onClickCheckbox(ItemVO)}
+              />
+            </div>
+            {isEditing ? (
+              <input
+                type="text"
+                id={ItemVO.id}
+                value={ItemVO.content}
+                onChange={(e) => {
+                  editContent(ItemVO.id, e.target.value);
+                }}
+                // className={`ml-3 form-input ${
+                //   ItemVO.isDone ? styles.completed : undefined
+                // }`}
+                autoFocus
+              />
+            ) : (
+              <p
+              // className={`ml-3 ${
+              //   ItemVO.isDone ? styles.completed : undefined
+              // }`}
+              >
+                {ItemVO.content}
+              </p>
+            )}
+            <div className="flex ml-auto space-x-2">
+              <button
+                type="button"
+                className="text-indigo-600 hover:text-indigo-900"
                 onClick={() => {
                   isEditing && beforeEdit !== ItemVO.content
                     ? onClickSave(ItemVO)
@@ -115,16 +98,20 @@ const ItemList: FC<Props> = ({
                   setBeforeEdit(ItemVO.content);
                 }}
               >
-                {isEditing ? <SaveIcon /> : <EditIcon />}
-              </IconButton>
-              <IconButton edge="end" onClick={() => onClickDelete(ItemVO.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          </Card>
+                {isEditing ? "Save" : "Edit"}
+              </button>
+              <button
+                type="button"
+                className="text-indigo-600 hover:text-indigo-900"
+                onClick={() => onClickDelete(ItemVO.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </li>
         );
       })}
-    </List>
+    </ul>
   );
 };
 

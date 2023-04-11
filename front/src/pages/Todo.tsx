@@ -1,9 +1,4 @@
 import React, { FC, memo, useEffect, useState } from "react";
-import { Theme } from "@mui/material/styles";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import { ItemVO } from "../types/vo";
 import ItemList from "../components/ItemList";
 import ItemForm from "../components/ItemForm";
@@ -11,16 +6,9 @@ import { TodoStore } from "../stores/todo-store";
 import { useSnackbar } from "notistack";
 import { TODO_MAX_LIMIT } from "../types/const";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: () => ({}),
-  })
-);
-
 type Props = Record<string, never>;
 
 const Todo: FC<Props> = () => {
-  const styles = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const todoStore = TodoStore.useContainer();
 
@@ -90,7 +78,6 @@ const Todo: FC<Props> = () => {
   const onContentStateTrack = async (id: string, content: string) => {
     const updatedList = items.map((i) => {
       if (i.id === id) {
-        // return { ...i, content: i.content };
         return { ...i, content: content };
       }
       return i;
@@ -99,13 +86,13 @@ const Todo: FC<Props> = () => {
   };
 
   return (
-    <Box p={2} className={styles.root}>
-      <Grid container justifyContent="center" textAlign="center" spacing={2}>
-        <Grid item sm={8} md={6} lg={4}>
-          <Box my={2}>
+    <div className="p-2 bg-gray-100">
+      <div className="grid justify-center gap-2 text-center">
+        <div className="sm:w-8/12 md:w-6/12 lg:w-4/12 ">
+          <div className="my-2">
             <ItemForm onAddItem={onAddItem} />
-          </Box>
-          <Box>
+          </div>
+          <div>
             <ItemList
               items={items}
               onCheckItem={onCheckItem}
@@ -113,10 +100,10 @@ const Todo: FC<Props> = () => {
               onUpdateItem={onUpdateItem}
               onContentStateTrack={onContentStateTrack}
             />
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
