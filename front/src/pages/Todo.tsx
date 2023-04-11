@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type Props = Record<string, never>;
 
-const Index: FC<Props> = () => {
+const Todo: FC<Props> = () => {
   const styles = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const todoStore = TodoStore.useContainer();
@@ -120,4 +120,4 @@ const Index: FC<Props> = () => {
   );
 };
 
-export default memo(Index);
+export default memo(Todo);
